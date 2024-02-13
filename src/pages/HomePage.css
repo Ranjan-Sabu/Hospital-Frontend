@@ -1,0 +1,98 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  header {
+    background-color: #3498db;
+    color: white;
+    padding: 10px;
+  }
+  
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  ul {
+    list-style: none;
+    display: flex;
+  }
+  
+  li {
+    margin: 0 10px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: white;
+  }
+  
+  main {
+    padding: 20px;
+  }
+  
+  footer {
+    background-color: #34495e;
+    color: white;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .user-actions {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  #profile-btn, #logout-btn {
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: none;
+    background-color: #2ecc71;
+    color: white;
+    border-radius: 5px;
+  }
+  
+  #profile-btn:hover, #logout-btn:hover {
+    background-color: #27ae60;
+  }
+  
+  /* Media queries for responsiveness */
+  
+  @media screen and (max-width: 768px) {
+    nav {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    ul {
+      margin-top: 10px;
+    }
+  
+    .user-actions {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    #profile-btn, #logout-btn {
+      margin-top: 10px;
+      margin-left: 0;
+    }
+  }
+  .main {
+    background-image: url('https://continentalhospitals.com/images/slides/1aacccd507c773c0c880df7562bcc6df.jpg');
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  
+ 
+  
