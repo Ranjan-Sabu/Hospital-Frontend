@@ -1,0 +1,28 @@
+.containerss {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20190220/ourmid/pngtree-technology-technology-health-doctors-image_10060.jpg'); /* Replace 'background-image.jpg' with your image file */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(230, 217, 217);
+  }
+
+  .containers {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5); /* Adjust the transparency as needed */
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  p {
+    margin-bottom: 10px;
+  }

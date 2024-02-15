@@ -1,140 +1,128 @@
-import React from 'react'
+import React, { useState } from 'react';
 import 'bootstrap-css-only/css/bootstrap.min.css';
-// import 'mdb-react-ui-kit/css/mdb.min.css';
-
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
 
 const RegistrationPage = () => {
-  
+  const navigate = useNavigate();
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const handleSumbit = async (e) => {
+    e.preventDefault();
+
+    // Extract values from form fields
+    const username = document.getElementById('username').value;
+    const first_name = document.getElementById('first_name').value;
+    const last_name = document.getElementById('last_name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const password2 = document.getElementById('password2').value;
+    const is_doctor = document.getElementById('is_doctor').value;
+
+    const data = {
+      username,
+      first_name,
+      last_name,
+      email,
+      password,
+      password2,
+      is_doctor,
+    };
+
+    try {
+      // Password validation
+      if (password.length < 8) {
+        alert('Password must be at least 8 characters long.');
+        return; // Stop execution if validation fails
+      }
+    
+      if (password !== password2) {
+        alert('Passwords do not match.');
+        return; // Stop execution if validation fails
+      }
+    
+      // Send a POST request to your server
+      const response = await axios.post('http://127.0.0.1:8000/register/', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    
+      if (response.status === 201) {
+        alert('Registration successful. You can now log in');
+        navigate('/login');
+      } else {
+        toast.error('Registration failed. Please check your details and try again.');
+        setSuccessMessage('');
+      }
+    } catch (error) {
+      // Handle specific error messages or display a generic one
+      alert('Registration failed. Please check your details and try again.');
+      setSuccessMessage('');
+    }
+    
+  }
+
   return (
-    <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col">
-        <div class="card card-registration my-4">
-          <div class="row g-0">
-            <div class="col-xl-6 d-none d-xl-block">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
-                alt="Sample photo" class="img-fluid"
-               />
-            </div>
-            <div class="col-xl-6">
-              <div class="card-body p-md-5 text-black">
-                <h3 class="mb-5 text-uppercase">Student registration form</h3>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <input type="text" id="form3Example1m" class="form-control form-control-lg" />
-                      <label class="form-label" for="form3Example1m">First name</label>
+    <div className="container py-5 h-100">
+      <div className="row d-flex justify-content-center align-items-center h-100">
+        <div className="col">
+          <div className="card card-registration my-4">
+            <div className="row g-0">
+              <div className="col-xl-6 d-none d-xl-block">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                  alt="Sample photo" className="img-fluid" />
+              </div>
+              <div className="col-xl-6">
+                <div className="card-body p-md-5 text-black">
+                  <h3 className="mb-5 text-uppercase">User Registration</h3>
+                  <form onSubmit={handleSumbit}>
+                    <div className="mb-4">
+                      <label htmlFor="username" className="form-label">Username</label>
+                      <input type="text" id="username" className="form-control form-control-lg" required />
                     </div>
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <input type="text" id="form3Example1n" class="form-control form-control-lg" />
-                      <label class="form-label" for="form3Example1n">Last name</label>
+                    <div className="mb-4">
+                      <label htmlFor="first_name" className="form-label">First Name</label>
+                      <input type="text" id="first_name" className="form-control form-control-lg" required />
                     </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <input type="text" id="form3Example1m1" class="form-control form-control-lg" />
-                      <label class="form-label" for="form3Example1m1">Mother's name</label>
+                    <div className="mb-4">
+                      <label htmlFor="last_name" className="form-label">Last Name</label>
+                      <input type="text" id="last_name" className="form-control form-control-lg" required />
                     </div>
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <input type="text" id="form3Example1n1" class="form-control form-control-lg" />
-                      <label class="form-label" for="form3Example1n1">Father's name</label>
+                    <div className="mb-4">
+                      <label htmlFor="email" className="form-label">Email</label>
+                      <input type="email" id="email" className="form-control form-control-lg" required />
                     </div>
-                  </div>
+                    <div className="mb-4">
+                      <label htmlFor="password" className="form-label">Password</label>
+                      <input type="password" id="password" className="form-control form-control-lg" required />
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="password2" className="form-label">Confirm Password</label>
+                      <input type="password" id="password2" className="form-control form-control-lg" required />
+                    </div>
+                    <Form.Select id="is_doctor" className="mb-4" aria-label="Default select example" required>
+                      <option value="">Select User Type</option>
+                      <option value="False">I'm not a Doctor</option>
+                      <option value="True">I'm a Doctor</option>
+                    </Form.Select>
+                    <div className="d-flex justify-content-end pt-3">
+                      <button type="reset" className="btn btn-light btn-lg">Reset all</button>
+                      <button type="submit" className="btn btn-warning btn-lg ms-2">Register</button>
+                    </div>
+                  </form>
                 </div>
-
-                <div class="form-outline mb-4">
-                  <input type="text" id="form3Example8" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example8">Address</label>
-                </div>
-
-                <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
-
-                  <h6 class="mb-0 me-4">Gender: </h6>
-
-                  <div class="form-check form-check-inline mb-0 me-4">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
-                      value="option1" />
-                    <label class="form-check-label" for="femaleGender">Female</label>
-                  </div>
-
-                  <div class="form-check form-check-inline mb-0 me-4">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
-                      value="option2" />
-                    <label class="form-check-label" for="maleGender">Male</label>
-                  </div>
-
-                  <div class="form-check form-check-inline mb-0">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="otherGender"
-                      value="option3" />
-                    <label class="form-check-label" for="otherGender">Other</label>
-                  </div>
-
-                </div>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-
-                    <select class="select">
-                      <option value="1">State</option>
-                      <option value="2">Option 1</option>
-                      <option value="3">Option 2</option>
-                      <option value="4">Option 3</option>
-                    </select>
-
-                  </div>
-                  <div class="col-md-6 mb-4">
-
-                    <select class="select">
-                      <option value="1">City</option>
-                      <option value="2">Option 1</option>
-                      <option value="3">Option 2</option>
-                      <option value="4">Option 3</option>
-                    </select>
-
-                  </div>
-                </div>
-
-                <div class="form-outline mb-4">
-                  <input type="text" id="form3Example9" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example9">DOB</label>
-                </div>
-
-                <div class="form-outline mb-4">
-                  <input type="text" id="form3Example90" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example90">Pincode</label>
-                </div>
-
-                <div class="form-outline mb-4">
-                  <input type="text" id="form3Example99" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example99">Course</label>
-                </div>
-
-                <div class="form-outline mb-4">
-                  <input type="text" id="form3Example97" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example97">Email ID</label>
-                </div>
-
-                <div class="d-flex justify-content-end pt-3">
-                  <button type="button" class="btn btn-light btn-lg">Reset all</button>
-                  <button type="button" class="btn btn-warning btn-lg ms-2">Submit form</button>
-                </div>
-
               </div>
             </div>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
-  </div>
-  )
-}
+  );
+};
 
-export default RegistrationPage
+export default RegistrationPage;

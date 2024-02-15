@@ -1,4 +1,4 @@
-body {
+/* body {
     margin: 0;
     font-family: 'Arial', sans-serif;
   }
@@ -65,7 +65,7 @@ body {
     background-color: #27ae60;
   }
   
-  /* Media queries for responsiveness */
+  /* Media queries for responsiveness 
   
   @media screen and (max-width: 768px) {
     nav {
@@ -87,12 +87,39 @@ body {
       margin-left: 0;
     }
   }
-  .main {
-    background-image: url('https://continentalhospitals.com/images/slides/1aacccd507c773c0c880df7562bcc6df.jpg');
+  .image{
     height: 100vh;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
+    
   }
   
  
-  
+   */
+
+   .user-info-container {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  margin-right: 5px;
+}
+
+.username {
+  display: none; /* Initially hide the username */
+}
+
+.user-info-container:hover .username {
+  display: block; /* Display the username when the container is hovered */
+}
+
+footer {
+  background-color: #34495e;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
