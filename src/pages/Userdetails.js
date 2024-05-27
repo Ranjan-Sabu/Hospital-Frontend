@@ -44,14 +44,17 @@ const UserDetails = () => {
   }
 
   return (
-    <div className="container mt-5">
+  <div className="container mt-5">
     <div className="card bg-light p-3">
       <div className="card-header bg-primary text-white text-center">
-        <h2 className="mb-0">User Details</h2>
+      {user.is_doctor && user.doctor && (
+            <h2 className="mb-0">Doctor Details</h2>
+          )}
+          {!user.is_doctor && <h2 className="mb-0">User Details</h2>}
       </div>
       <div className="card-body">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <div className="form-group">
               <label className="font-weight-bold">Username:</label>
               <p className="mb-2">{user.username}</p>
@@ -61,7 +64,7 @@ const UserDetails = () => {
               <p className="mb-2">{user.email}</p>
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <div className="form-group">
               <label className="font-weight-bold">First Name:</label>
               <p className="mb-2">{user.first_name}</p>
@@ -71,11 +74,30 @@ const UserDetails = () => {
               <p className="mb-2">{user.last_name}</p>
             </div>
           </div>
+          <div className="col-md-4">
+              <div className="form-group">
+                {user.is_doctor && (
+                  <>
+                    <label className="font-weight-bold">Department:</label>
+                    <p className="mb-2">{user.doctor.department}</p>
+                  </>
+                )}
+              </div>
+              <div className="form-group">
+                {user.is_doctor && (
+                  <>
+                    <label className="font-weight-bold">Hospital:</label>
+                    <p className="mb-2">{user.doctor.hospital}</p>
+                  </>
+                )}
+              </div>
+           </div>   
         </div>
       </div>
     </div>
   </div>
-  );
+);
 };
+  
 
 export default UserDetails;

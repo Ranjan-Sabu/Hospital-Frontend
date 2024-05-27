@@ -33,18 +33,16 @@ const RegistrationPage = () => {
     };
 
     try {
-      // Password validation
       if (password.length < 8) {
         alert('Password must be at least 8 characters long.');
-        return; // Stop execution if validation fails
+        return; 
       }
     
       if (password !== password2) {
         alert('Passwords do not match.');
-        return; // Stop execution if validation fails
+        return; 
       }
     
-      // Send a POST request to your server
       const response = await axios.post('http://127.0.0.1:8000/register/', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +57,6 @@ const RegistrationPage = () => {
         setSuccessMessage('');
       }
     } catch (error) {
-      // Handle specific error messages or display a generic one
       alert('Registration failed. Please check your details and try again.');
       setSuccessMessage('');
     }

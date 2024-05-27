@@ -40,11 +40,14 @@ export const AuthProvider = ({ children }) => {
             alert('Your account is blocked. Please contact support for assistance.');
             } else if (user.is_admin) {
               console.log('ADMIMNNNNNNNNNNNNNNNNNNNNNNNNNN');
+              alert('welcome Admin')
               nav('/admin');
             } else if(user.is_doctor){
+              alert('welcome Doctor')
               nav('/doctor')
             }
             else {
+              alert('Welcome')
               nav('/')
             }
           }

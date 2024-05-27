@@ -10,6 +10,7 @@ const AdminsPage = () => {
   const { authToken, logoutUser } = useContext(AuthContext);
   const [blockedUsers, setBlockedUsers] = useState({});
 
+
   const fetchUserList = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/adminuserlist/', {
@@ -26,6 +27,7 @@ const AdminsPage = () => {
           return acc;
         }, {});
         setBlockedUsers(initialBlockedUsers);
+
         setAllUser(userList);
       } else {
         console.log('Failed to fetch user list.');
@@ -63,6 +65,7 @@ const AdminsPage = () => {
     }
   };
 
+
   return (
     <body>
       <div class="container">
@@ -98,6 +101,7 @@ const AdminsPage = () => {
                     </li>
                   ) : null 
                 ))}
+                
             </ul>
           </div>
 
@@ -128,10 +132,10 @@ const AdminsPage = () => {
                           Block
                         </button>
                       )}
-                    </li>
-                  ) : null 
-                ))}
-            </ul>
+                      </li>
+                          ) : null 
+                  ))}
+              </ul>
           </div>
         </div>
       </div>

@@ -1,12 +1,46 @@
 import React, { useState } from 'react'
 import './HomePage.css'
 import './DoctorPage.css'
-import { Link } from 'react-router-dom'
-import { useContext } from 'react'
+import { Link, useActionData } from 'react-router-dom'
+import { useContext,useEffect } from 'react'
 import AuthContext from '../context/AuthContext'
+import axios from 'axios'
+
+export const fetchDoctorDetails = async (authToken, setDoctorDetails) => {
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/userprofile/', {
+      headers: {
+        'Authorization': 'Bearer ' + String(authToken.access),
+      },
+    });
+
+    if (response.status === 200) {
+      const doctorData = response.data.data;
+      console.log('Fetched Doctor Details:', doctorData);
+      setDoctorDetails(doctorData);
+    } else {
+      console.log('Failed to fetch doctor details.');
+    }
+  } catch (error) {
+    console.error('Error fetching doctor details:', error);
+  }
+};
 
 const DoctorsPage = () => {
-let {user,logoutUser} = useContext(AuthContext)
+let {user,logoutUser,authToken} = useContext(AuthContext)
+  
+const [doctorDetails, setDoctorDetails] = useState({});
+useEffect(() => {
+  const fetchDetails = async () => {
+    if (authToken && authToken.access) {
+      await fetchDoctorDetails(authToken, setDoctorDetails);
+    }
+  };
+
+  fetchDetails();
+}, [authToken]);
+
+
 
   return (
     <body>
@@ -24,35 +58,25 @@ let {user,logoutUser} = useContext(AuthContext)
               <a class="navbar-brand d-none d-lg-block" href="#">City Hospital</a>
               <ul class="navbar-nav">
                 <li class="nav-item active">
-                  <a class="nav-link text-light" href="{% url 'home' %}"><b>Home</b><span class="sr-only">(current)</span></a>
+                 <Link to='/doctor'><a class="nav-link text-light"><b>Home</b><span class="sr-only">(current)</span></a></Link> 
                 </li>
-                <li class="nav-item">
-                  <a href="" class="nav-link text-light"><b>About</b></a>
-                </li>
-                {/* <li class="nav-item active">
-                  <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   <b>Categories</b>
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href=""></a>
-                  </div>
-                </li> */}
               </ul>
             </div>
-      
-         
-      
+
             <div class="right-section d-flex align-items-center ml-auto">
                
                {
                   user ? (
                     <div className="user-info-container">
+                  <Link to='/updateprofile'>
                     <img
                       src="https://bootdey.com/img/Content/avatar/avatar3.png"
                       alt=""
                       className="rounded-circle user-avatar"
                     />
-                    <p className="username">{user.username}</p>
+                    </Link>
+
+                    <p className="username">{doctorDetails.username}</p>
                     <button id="logout-btn" onClick={logoutUser}>Logout</button>
                   </div>
                   ) : (
@@ -71,11 +95,13 @@ let {user,logoutUser} = useContext(AuthContext)
     <br></br>
     <div class="containerss">
     <div class="containers">
-    <h2>Welcome, Dr. John Doe!</h2>
+    <h2>Welcome, Dr.{doctorDetails.username}!</h2>
 
-    <p><strong>Name:</strong> Dr. John Doe</p>
-    <p><strong>Specialization:</strong> Cardiologist</p>
-    <p><strong>Email:</strong> john.doe@example.com</p>
+    <p><strong>Name:</strong> {doctorDetails.first_name}</p>
+    <p><strong>Department:</strong> {doctorDetails.doctors?.department  || ''}</p>
+    <p><strong>Hospital:</strong> {doctorDetails.doctors?.hospital  || ''}</p>
+
+    <p><strong>Email:</strong> {doctorDetails.email}</p>
 
     <p>Welcome to your doctor home page. You can manage your details, view appointments, and more.</p>
   </div>

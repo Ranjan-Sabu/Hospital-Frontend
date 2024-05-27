@@ -43,7 +43,6 @@ const Homepage = () => {
     }
   }, [dataFetched]);
 
-  // Rest of your component code
 
   return (
     <body>
@@ -67,19 +66,8 @@ const Homepage = () => {
               <a class="navbar-brand d-none d-lg-block" href="#">City Hospital</a>
               <ul class="navbar-nav">
                 <li class="nav-item active">
-                  <a class="nav-link text-light" href="{% url 'home' %}"><b>Home</b><span class="sr-only">(current)</span></a>
+                  <Link to='/'><a class="nav-link text-light"><b>Home</b><span class="sr-only">(current)</span></a></Link>
                 </li>
-                <li class="nav-item">
-                  <a href="" class="nav-link text-light"><b>About</b></a>
-                </li>
-                {/* <li class="nav-item active">
-                  <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   <b>Categories</b>
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href=""></a>
-                  </div>
-                </li> */}
               </ul>
             </div>
       
@@ -89,13 +77,16 @@ const Homepage = () => {
                
                {
                   user ? (
+
                     <div className="user-info-container">
+                      <Link to="/updateprofile">
                     <img
                       src="https://bootdey.com/img/Content/avatar/avatar3.png"
                       alt=""
                       className="rounded-circle user-avatar"
                     />
-                    <p className="username">{user.username}</p>
+                    </Link>
+                    {/* <p className="username">{user.username}</p> */}
                     <button id="logout-btn" onClick={logoutUser}>Logout</button>
                   </div>
                   ) : (
@@ -113,22 +104,21 @@ const Homepage = () => {
     </header>
     <div className="main container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
   <img className='image img-fluid' src='https://continentalhospitals.com/images/slides/1aacccd507c773c0c880df7562bcc6df.jpg' alt="Hospital Image" />
-
+  <h1>Our Expert Doctors</h1>
   <div className="row mt-4">
     {doctorList && doctorList.map((doctor, index) => (
       <div key={index} className="col-md-4 mb-4">
         <div className="card" style={{ width: '100%' }}>
-          {/* Assuming the doctor's image is available in the doctor object */}
-          <img className="card-img-top" src={doctor.imageSrc} alt={`Dr. ${doctor.username}`} />
-
-          <div className="card-body">
-            <h5 className="card-title">{doctor.username}</h5>
-            <h6 className="card-subtitle mb-2 text-muted">{doctor.doctor[0].department}</h6>
+          <div className="card-body text-center">
+            <h4 className="card-title">{doctor.username}</h4>
+            <hr/>
+            <h5>Department</h5>
+            <h6 className="card-subtitle mb-2 text-primary">{doctor.doctors.department}</h6>
+           <h6> Hospital:<span className='text-success'>{doctor.doctors.hospital}</span></h6>
             <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" className="btn btn-primary">Go somewhere</a>
           </div>
         </div>
-      </div>
+      </div>   
     ))}
   </div>
 </div>
